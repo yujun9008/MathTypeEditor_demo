@@ -3,6 +3,9 @@ import { Modal } from "antd";
 import MathTypeEditor from "react-mathtype-editor";
 import katex from "katex";
 import "katex/dist/katex.min.css";
+import "../../src/styles/global.css";
+
+
 
 const content = '<h1>一、点击下面公式部分编辑</h1><p>设<span data-latex="(\\Omega,\\mathcal{F},P)" data-type="inline-math"></span>为概率空间，<span data-latex="B" data-type="inline-math"></span>为已知发生的事件且<span data-latex="P(B)&gt;0" data-type="inline-math"></span>。事件<span data-latex="A_i" data-type="inline-math"></span>在<span data-latex="B" data-type="inline-math"></span>发生条件下的条件概率定义为<span data-latex="P(A_i|B)=\\frac{P(A_iB)}{P(B)}" data-type="inline-math"></span>。利用乘法公式<span data-latex="P(A_iB)=P(A_i)P(B|A_i)" data-type="inline-math"></span>，可得<span data-latex="P(A_i|B)=\\frac{P(A_i)P(B|A_i)}{P(B)}" data-type="inline-math"></span>。</p><h3>1.2 全概率公式在分母中的角色</h3><p>若<span data-latex="A_1,A_2,\\dots,A_n" data-type="inline-math"></span>构成<span data-latex="\\Omega" data-type="inline-math"></span>的一个划分，则<span data-latex="P(B)=\\sum_{j=1}^{n}P(A_j)P(B|A_j)" data-type="inline-math"></span>。将此式代入上式，即得贝叶斯公式的标准形式：<br><span data-latex="P(A_i|B)=\\frac{P(A_i)P(B|A_i)}{\\sum_{j=1}^{n}P(A_j)P(B|A_j)}" data-type="inline-math"></span>，其中<span data-latex="i=1,2,\\dots,n" data-type="inline-math"></span>。</p><h3>1.2 似然<span data-latex="P(B|A_i)" data-type="inline-math"></span></h3><p>刻画在假设<span data-latex="A_i" data-type="inline-math"></span>成立的条件下，观察到证据<span data-latex="B" data-type="inline-math"></span>的“似然度”。似然越大，说明<span data-latex="A_i" data-type="inline-math"></span>对<span data-latex="B" data-type="inline-math"></span>的解释力越强。</p>';
 export default function HomePage() {
@@ -11,6 +14,8 @@ export default function HomePage() {
   const [currentElement, setCurrentElement] = useState<HTMLElement | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const contentRef = useRef(null);
+
+
 
   useEffect(() => {
     if (contentRef.current) {
@@ -75,35 +80,37 @@ export default function HomePage() {
   return (
     <div>
       <div
-        ref={contentRef}
-        style={{ width: 800, margin: '0 auto' }}
-        dangerouslySetInnerHTML={{
-          __html: content,
-        }}
-      />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-     
-      <div style={{ width: 800,margin:'0 auto' }}>
-         <p><h1>二、 直接输入公式</h1></p>
-        <MathTypeEditor
-          defaultValue={formula}
-          onChange={(value) => setFormula(value)}
-          style={{ width: "100%" }}
+          ref={contentRef}
+          style={{ width: 800, margin: '0 auto' }}
+          dangerouslySetInnerHTML={{
+            __html: content,
+          }}
         />
-      </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+       
+        <div style={{ width: 800,margin:'0 auto' }}>
+           <p><h1>二、 直接输入公式</h1></p>
+          <MathTypeEditor
+            defaultValue={formula}
+            onChange={(value) => setFormula(value)}
+            style={{ width: "100%" }}
+          />
+        </div>
 
-      <Modal
-        title="编辑公式"
-        open={isModalVisible}
-        onCancel={() => setIsModalVisible(false)}
-        onOk={handleSaveFormula}
-        width={800}
-      >
+        <Modal
+          title="编辑公式"
+          open={isModalVisible}
+          onCancel={() => setIsModalVisible(false)}
+          onOk={handleSaveFormula}
+          width={800}
+          destroyOnClose={true}
+          maskClosable={false}
+        >
         <div style={{ height: 400 }}>
           <MathTypeEditor
             defaultValue={editingLatex}
